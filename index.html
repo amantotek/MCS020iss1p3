@@ -33,6 +33,29 @@
         <label for="num4">Barrier: None=0 Partial=5 Full=10:</label><br>
         <input type="number" id="num4" placeholder="Enter number">
     </div>
+
+    // NOTE 4: DB DISTANCE REDUCTION (14 column table)
+    const hrr = [
+      [1, 1.5, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20, 25, 30],
+      [-8, -11, -14, -17, -20, -21, -23, -26, -28, -29, -31, -34, -36, -37]
+    ];
+    
+    // NOTE 7: DECIBEL CORRECTION (STEP 9)
+    const ArrStp9 = [3.0, 2.5, 2.1, 1.8, 1.5, 1.2, 1.0, 0.8, 0.6, 0.5, 0.4, 0.3, 0.3, 0.2, 0.2, 0.1];
+    
+    // Test
+    const iRws = [0, 3, 6];
+    for (const yy of iRws) {
+      // range(6) is values 0 to 5.
+      for (let xx = 0; xx < 14; xx++) {
+        let iTablVal = hrr[1][xx] + yy;
+        if (yy > 0 && xx === 5) {
+          iTablVal -= 1; // anomaly
+        }
+        process.stdout.write(iTablVal.toString());
+      }
+      console.log();
+    }    
      
     <!-- Calculate Button -->
     <div>
