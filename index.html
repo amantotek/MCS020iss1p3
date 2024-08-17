@@ -91,6 +91,34 @@
           }
           return parseFloat(fDBAdistanceReduction.toFixed(4)); // For presentation curtail digits after decimal place
         }
+
+        function testCurvFits() {
+          const sFilnm = "mcs020CurvFitTest.txt";
+          let sTmp = "For curve fitting original Step 4 table\n";
+          // Note 4 hrr
+          for (let xx = 0; xx < 14; xx++) {
+            let iTablVal = hrr[0][xx]; // Distance from Heat Pump in metres. Step 3 result.
+            let iyVal = hrr[1][xx]; // Q2 step result
+            if (xx === 5) {
+              iyVal -= 1; // anomaly
+            }
+            sTmp += `${iTablVal} ${iyVal}\n`;
+          }
+        
+          sTmp += "\nFor curve fitting original Step 9 table\n";
+          for (let iXein = 0; iXein < 16; iXein++) { // 0 to 15
+            sTmp += `${iXein} ${ArrStp9[iXein]}\n`;
+          }
+          
+          sTmp += "\nTest curve fit for Step 9";
+          for (let iXein = 0; iXein < 16; iXein++) { // 0 to 15
+            sTmp += `${iXein} ${ArrStp9[iXein]} ${stepByEquatn9(iXein)}\n`;
+          }
+          sTmp += "\n";  
+          const fs = require('fs');
+          fs.writeFileSync(sFilnm, sTmp);
+          console.log(`Curve Fit Test results are in ${sFilnm}`);
+        }
  
         function calculateSum() {
             // NOTE 4: DB DISTANCE REDUCTION (14 column table)
