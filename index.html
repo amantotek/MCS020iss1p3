@@ -1,0 +1,30 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Sum Calculator</title>
+</head>
+<body>
+    <h1>Sum Calculator</h1>
+    <p>Enter two numbers:</p>
+    <form>
+        <input type="number" id="num1" placeholder="First Number">
+        <input type="number" id="num2" placeholder="Second Number">
+        <button type="button" onclick="calculateSum()">Calculate</button>
+    </form>
+    <p id="result"></p>
+
+    <script>
+        function calculateSum() {
+            var num1 = parseFloat(document.getElementById("Max dB of Heat Pump").value);
+            var num2 = parseFloat(document.getElementById("Reflective Surfaces 1-3").value);
+            var sum = num1 + num2;
+
+            document.getElementById("result").innerText = "Sum: " + sum;
+        }
+    </script>
+</body>
+</html>
+```
