@@ -6,7 +6,7 @@
     <title>MCS020 Calculator Issue ? </title>
 </head>
 <body>
-    <h1>Sum Calculator 1828</h1>
+    <h1>Sum Calculator 2140</h1>
     <p>Enter the numbers:</p>
     
     <!-- First Number Input -->
@@ -44,6 +44,54 @@
     <p id="result"></p>
 
     <script>
+        function doStepFour(fMDist, i012) {
+          let fDistReductn;
+          if (bStep4ByTable === true) {
+            fDistReductn = doStepOriginalFour(fMDist, i012); // As original MCS020 Table 4
+          } else {
+            fDistReductn = stepByEquatn4(fMDist, i012); // Use equation 
+          }
+          return fDistReductn;
+        }
+        
+        function doStepOriginalFour(fMDist, i012) {
+          // Note 4: DB DISTANCE REDUCTION (STEP4)
+          // fMDist is in range 1 thro 30 inclusive fitting into horizontal columns in Table
+          // i012 is 0, 1 or 2 reflecting Q result 2, 4 or 8 down Table
+          const ixxCol = mToCol(fMDist); // Convert distance to column
+          const yy = i012 * 3; // So now 0, 3 or 6
+          let iTablVal = hrr[1][ixxCol] + yy; // 2nd row down with results
+          if (yy > 0 && ixxCol === 5) {
+            iTablVal -= 1; // anomaly
+          }
+          console.log(`${fMDist} ${ixxCol} ${i012} ${iTablVal}`); // For testing
+          return iTablVal;
+        }
+        
+        // For Step 4 fit using 4PL Symetrical Sigmoidal with original 5,-21 for Q2
+        const K1 = -84.13366;
+        const K2 = 29.64521;
+        const K3 = -84.13366;
+        const K4 = 9.496686;
+        const K5 = 0.3130866;
+        
+        function cuFit(fxx) {
+          return K1 + (K2 - K3) / (1 + Math.pow((fxx / K4), K5)); // As float
+        }
+        
+        function stepByEquatn4(fMDist, i012) {
+          // Note 4: DB DISTANCE REDUCTION (STEP4) but use equation not original MCS020 table
+          // fMDist is in range 1 thro 30 inclusive fitting into horizontal columns in Table
+          // i012 is 0, 1 or 2 reflecting Q result 2, 4 or 8
+          let fDBAdistanceReduction = cuFit(fMDist); // Worked for Q2
+          if (i012 === 1) {
+            fDBAdistanceReduction += 3; // For Q4
+          } else if (i012 === 2) {
+            fDBAdistanceReduction += 6; // For Q8
+          }
+          return parseFloat(fDBAdistanceReduction.toFixed(4)); // For presentation curtail digits after decimal place
+        }
+        
         function calculateSum() {
 
             // NOTE 4: DB DISTANCE REDUCTION (14 column table)
