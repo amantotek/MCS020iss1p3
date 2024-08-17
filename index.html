@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MCS020 Calculator Issue ? </title>
+    <title>MCS020 Issue 1.3 Calculator</title>
 </head>
 <body>
-    <h1>Sum Calculator 2140</h1>
+    <h1>Sum Calculator 2143</h1>
     <p>Enter the numbers:</p>
     
     <!-- First Number Input -->
@@ -91,6 +91,23 @@
           }
           return parseFloat(fDBAdistanceReduction.toFixed(4)); // For presentation curtail digits after decimal place
         }
+
+        def stepByEquatn9(fXin):
+          #NOTE 7: DECIBEL CORRECTION (STEP 9)
+          #y = 2.982714 - 0.4826954*x + 0.0284963*x^2 - 0.0005996798*x^3 Cubic Regression 3rd order polynomial
+          Ka = 2.982714
+          Kb = 0.4826954
+          Kc = 0.0284963
+          Kd = 0.0005996798
+          fUt = Ka - Kb*fXin + Kc*(math.pow(fXin,2)) - Kd*(math.pow(fXin,3))
+          return round(fUt,5)
+        
+        def isfloat(string):
+          try:
+              float(string)
+              return True
+          except ValueError:
+              return False
         
         function calculateSum() {
 
