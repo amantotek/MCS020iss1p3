@@ -7,7 +7,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
 </head>
 <body onload="brython()">
-    <h1>Sum Calculator 1654 </h1>
+    <h1>Sum Calculator 1703 </h1>
     <p>Enter the numbers:</p>
 
     <!-- First Number Input -->
@@ -50,7 +50,9 @@
     <p id="result"></p>
 
     <script type="text/python">
-        from browser import document, alert, math
+        # Import the math module
+        import math
+        from browser import document, alert
 
         def calculate_sum(event):
             # Get the input values
@@ -191,8 +193,14 @@
                 #document['result'].text = "Please enter \n valid numbers." 
                 document['result'].html = "Please enter<br>valid numbers."
 
-        # Attach the calculate_sum function to the button click event
+        # Bind the calculate_sum function to the button click event
         document['calculate-button'].bind('click', calculate_sum)
+
+        # Bind the calculate_sum function to the checkbox change event
+        document['boolean'].bind('change', calculate_sum)
+
+        # Call calculate once to ensure result is displayed on page load with checkbox checked
+        calculate_sum(None)        
     </script>
 </body>
 </html>
