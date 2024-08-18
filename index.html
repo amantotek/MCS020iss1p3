@@ -11,7 +11,7 @@
 </head>
 <body onload="brython()">
     <h1>MCS020 Issue 1.3 Calculator</h1>
-    <p> Version: 2034 <br>Enter the data numbers:</p>
+    <p> Version: 2039 <br>Enter the data numbers:</p>
 
     <!-- First Number Input -->
     <div class="input-group">
@@ -40,7 +40,7 @@
 
     <!-- Boolean Input (Checkbox) -->
     <div class="input-group">
-        <label for="boolean">Check for Quadruple:</label>
+        <label for="boolean">Select for official MCS Table usage:</label>
         <!-- Below the checkbox is checked (i.e., set to true) when the page first loads. -->
         <input type="checkbox" id="boolean" checked>
     </div>    
@@ -165,9 +165,9 @@
         
             sgUt  +=  "Doing Step 4 onwards<br>"
             if bStep4ByTable == True:
-              fDbreduction = doStepOriginalFour(fMDist,iRefl) #As original MCS020 Tables Notes 4 and 7
+              fDbreduction = doStepOriginalFour(fDm,iRefl) #As original MCS020 Tables Notes 4 and 7
             else:
-              fDbreduction = stepByEquatn4(fMDist,iRefl) #Use equations instead of MCS tables 
+              fDbreduction = stepByEquatn4(fDm,iRefl) #Use equations instead of MCS tables 
             #fDbreduction = doStepFour(fDm,iRefl) #All -ve numbers from Note 4 table (always negative integers in original table)
         
             fStep6 = iDb+fDbreduction+iBa  #Steps 1+4+5 gives step 6
