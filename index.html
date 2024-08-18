@@ -7,7 +7,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
 </head>
 <body onload="brython()">
-    <h1>Sum Calculator 1257 </h1>
+    <h1>Sum Calculator 1302 </h1>
     <p>Enter the numbers:</p>
 
     <!-- First Number Input -->
@@ -165,11 +165,11 @@
             else:
               fAdjustmentFigure = stepByEquatn9(fAbsStp8)
             fFinal = fHighest + fAdjustmentFigure
-            #sRpt = "{} dB Pass if <= 42.0".format(fFinal)
+            sgUt  +=  "Final result (Fail is over 42) " + str(fFinal) + "<br>"
             if fFinal > 42:
-              sgUt  +=  "FAIL<br>"
+              sgUt  +=  "FAILED<br>"
             else:
-              sgUt  +=  "PASS<br>"
+              sgUt  +=  "PASSED<br>"
         
             try:
                 # Convert to float and calculate the sum
