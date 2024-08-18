@@ -10,7 +10,7 @@
     
 </head>
 <body onload="brython()">
-    <h1>Sum Calculator 1730 </h1>
+    <h1>Sum Calculator 1818 </h1>
     <p>Enter the numbers:</p>
 
     <!-- First Number Input -->
@@ -41,7 +41,8 @@
     <!-- Boolean Input (Checkbox) -->
     <div class="input-group">
         <label for="boolean">Check for Quadruple:</label>
-        <input type="checkbox" id="boolean" checked> #the checkbox is checked (i.e., set to true) when the page first loads.
+        <!-- Below the checkbox is checked (i.e., set to true) when the page first loads. -->
+        <input type="checkbox" id="boolean" checked>
     </div>    
 
     <!-- Calculate Button -->
@@ -98,9 +99,9 @@
             
             def doStepFour(fMDist,i012):
               if bStep4ByTable == True:
-                fDistReductn = doStepOriginalFour(fMDist,i012) #As original MCS020 Table 4
+                fDistReductn = doStepOriginalFour(fMDist,i012) #As original MCS020 Tables Notes 4 and 7
               else:
-                fDistReductn = stepByEquatn4(fMDist,i012) #Use equation 
+                fDistReductn = stepByEquatn4(fMDist,i012) #Use equations instead of MCS tables 
               return fDistReductn
               
             def doStepOriginalFour(fMDist,i012):
@@ -156,11 +157,10 @@
                   iBa  =  int(num4)
                   iBa = -iBa #as we entered +ve values
                 bStep4ByTable = document['boolean'].checked
-                if bStep4ByTable:
-                    sgUt  +=  "True bool<br>"
+                if bStep4ByTable == True:
+                    sgUt  +=  "As original MCS020 Tables (See MCS Notes 4 and 7)<br>"
                 else:
-                    sgUt  +=  "False bool<br>"
-        
+                    sgUt  +=  "WARNING: Equations replace both MCS020 Tables (See MCS Notes 4 and 7)<br>"
                 sgUt  +=  str(iDb) + " " + str(iRefl) + " " + str(fDm) + " " + str(iBa) + "<br>"
                 break
         
@@ -203,7 +203,7 @@
         document['boolean'].bind('change', calculate_sum)
 
         # Call calculate once to ensure result is displayed on page load with checkbox checked
-        calculate_sum(None)        
+        #calculate_sum(None)        
     </script>
 </body>
 </html>
