@@ -7,7 +7,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
 </head>
 <body onload="brython()">
-    <h1>Sum Calculator 1209 </h1>
+    <h1>Sum Calculator 1228 </h1>
     <p>Enter the numbers:</p>
 
     <!-- First Number Input -->
@@ -63,7 +63,7 @@
             ArrStp9 = [3.0,2.5,2.1,1.8,1.5,1.2,1.0,0.8,0.6,0.5,0.4,0.3,0.3,0.2,0.2,0.1]
             sgUt = ""
             
-            #Test
+            #Test 1
             sgUt += "Test 1<br>"
             iRws = [0,3,6]
             for yy in iRws:
@@ -76,6 +76,72 @@
                 sgUt += str(iTablVal) + " "
               sgUt += "<br>"
 
+            def mToCol(fDist):  
+              #Convert distance to column in table  
+              for xx in range(14):
+                ivl = hrr[0][xx]
+                if fDist == ivl:
+                  return xx
+                if fDist < ivl:
+                  return xx-1
+            
+            def doStepFour(fMDist,i012):
+              if bStep4ByTable == True:
+                fDistReductn = doStepOriginalFour(fMDist,i012) #As original MCS020 Table 4
+              else:
+                fDistReductn = stepByEquatn4(fMDist,i012) #Use equation 
+              return fDistReductn
+              
+            def doStepOriginalFour(fMDist,i012):
+              #Note 4: DB DISTANCE REDUCTION (STEP4)
+              #fMDist is in range 1 thro 30 inclusive fitting into horizontal columns in Table
+              #i012 is 0, 1 or 2 reflecting Q result 2, 4 or 8 down Table
+              ixxCol = mToCol(fMDist) #Convert distance to column
+              yy = i012 * 3 #So now 0, 3 or 6
+              iTablVal = hrr[1][ixxCol] + yy #2nd row down with results
+              if yy > 0 and ixxCol == 5:
+                iTablVal -= 1 #anomaly
+              #print("{} {} {}  {}".format(fMDist,ixxCol,i012,iTablVal)) #For testing
+              return iTablVal
+
+            #For Step 4 fit using 4PL Symetrical Sigmoidal with original 5,-21 for Q2
+            K1 = -84.13366
+            K2 = 29.64521
+            K3 = -84.13366
+            K4 = 9.496686
+            K5 = 0.3130866
+            def cuFit(fxx):
+             return K1 + (K2 - K3)/( 1 + math.pow((fxx/K4),K5) ) #As float
+            
+            def stepByEquatn4(fMDist,i012):
+              #Note 4: DB DISTANCE REDUCTION (STEP4) but use equation not original MCS020 table
+              #fMDist is in range 1 thro 30 inclusive fitting into horizontal columns in Table
+              #i012 is 0, 1 or 2 reflecting Q result 2, 4 or 8 down Table
+              fDBAdistanceReduction = cuFit(fMDist) #Worked for Q2
+              if i012 == 1:
+                fDBAdistanceReduction += 3 #For Q4
+              elif i012 == 2:  
+                fDBAdistanceReduction += 6 #For Q8
+              return round(fDBAdistanceReduction,4) #For presentation curtail digits after decimal place 
+            
+            def stepByEquatn9(fXin):
+              #NOTE 7: DECIBEL CORRECTION (STEP 9)
+              #y = 2.982714 - 0.4826954*x + 0.0284963*x^2 - 0.0005996798*x^3 Cubic Regression 3rd order polynomial
+              Ka = 2.982714
+              Kb = 0.4826954
+              Kc = 0.0284963
+              Kd = 0.0005996798
+              fUt = Ka - Kb*fXin + Kc*(math.pow(fXin,2)) - Kd*(math.pow(fXin,3))
+              return round(fUt,5)
+
+            while True:
+                if num1.isdigit():
+                    iDb  =  int(num1) #Manufacturer max dBA
+                if num2.isdigit():
+                    iRefl  =  num2-1 #so now 0, 1 or 2
+                sgUt  +=  str(iDb) + " " + str(iRefl) + "<br>"
+                break
+        
             try:
                 # Convert to float and calculate the sum
                 sum_result = float(num1) + float(num2) + float(num3) + float(num4)
