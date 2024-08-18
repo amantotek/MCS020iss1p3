@@ -26,7 +26,7 @@
 
     <!-- Calculate Button -->
     <div>
-        <button type="button" onclick="calculate_sum()">Calculate</button>
+        <button type="button" id="calculate-button">Calculate</button>
     </div>
 
     <!-- Result Display -->
@@ -35,7 +35,7 @@
     <script type="text/python">
         from browser import document, alert
 
-        def calculate_sum():
+        def calculate_sum(event):
             # Get the input values
             num1 = document['num1'].value
             num2 = document['num2'].value
@@ -48,7 +48,8 @@
                 # Handle invalid input
                 document['result'].text = "Please enter valid numbers."
 
+        # Attach the calculate_sum function to the button click event
+        document['calculate-button'].bind('click', calculate_sum)
     </script>
 </body>
 </html>
-
