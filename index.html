@@ -11,7 +11,7 @@
 </head>
 <body onload="brython()">
     <h1>MCS020 Issue 1.3 Calculator</h1>
-    <p> Version: 2052 <br>Enter the data numbers:</p>
+    <p> Version: 2057 <br>Enter the data numbers:</p>
 
     <!-- First Number Input -->
     <div class="input-group">
@@ -178,7 +178,7 @@
             else:
               fAdjustmentFigure = stepByEquatn9(fAbsStp8)
             fFinal = fHighest + fAdjustmentFigure
-            sgUt  +=  "Final result (fail is over 42dB) " + round(fFinal,4) + "dB   " #For presentation curtail digits after decimal place
+            sgUt  +=  "Final result (fail is over 42dB) " + str(round(fFinal,4)) + "dB   " #For presentation curtail digits after decimal place
             if fFinal > 42:
               sgUt  +=  "FAILED<br>"
             else:
