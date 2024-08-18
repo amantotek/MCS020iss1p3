@@ -7,7 +7,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
 </head>
 <body onload="brython()">
-    <h1>Sum Calculator 1231 </h1>
+    <h1>Sum Calculator 1239 </h1>
     <p>Enter the numbers:</p>
 
     <!-- First Number Input -->
@@ -135,11 +135,19 @@
               return round(fUt,5)
 
             while True:
+                sgUt  +=  "Checking Inputs<br>"
                 if num1.isdigit():
                     iDb  =  int(num1) #Manufacturer max dBA
                 if num2.isdigit():
                     iRefl  =  int(num2)-1 #so now 0, 1 or 2
-                sgUt  +=  str(iDb) + " " + str(iRefl) + "<br>"
+                fDm  =  float(num3)
+                if sKba.isdigit(): 
+                  iBa  =  int(sKba)
+                  iBa = -iBa #as we entered +ve values
+        
+                sgUt  +=  str(iDb) + " " + str(iRefl) + " " + str(fDm) + " " + str(iBa) + "<br>"
+                #Step 4
+                #iDbreduction = doStepFour(fDm,iRefl) #All -ve numbers from Note 4 table (always negative integers in original table)
                 break
         
             try:
