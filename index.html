@@ -7,7 +7,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
 </head>
 <body onload="brython()">
-    <h1>Sum Calculator 1228 </h1>
+    <h1>Sum Calculator 1231 </h1>
     <p>Enter the numbers:</p>
 
     <!-- First Number Input -->
@@ -138,7 +138,7 @@
                 if num1.isdigit():
                     iDb  =  int(num1) #Manufacturer max dBA
                 if num2.isdigit():
-                    iRefl  =  num2-1 #so now 0, 1 or 2
+                    iRefl  =  int(num2)-1 #so now 0, 1 or 2
                 sgUt  +=  str(iDb) + " " + str(iRefl) + "<br>"
                 break
         
