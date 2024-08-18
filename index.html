@@ -11,7 +11,7 @@
 </head>
 <body onload="brython()">
     <h1>MCS020 Issue 1.3 Calculator</h1>
-    <p> Version: 2006 <br>Enter the data numbers:</p>
+    <p> Version: 2034 <br>Enter the data numbers:</p>
 
     <!-- First Number Input -->
     <div class="input-group">
@@ -74,12 +74,12 @@
             if fDist < ivl:
               return xx-1
         
-        def doStepFour(fMDist,i012):
-          if bStep4ByTable == True:
-            fDistReductn = doStepOriginalFour(fMDist,i012) #As original MCS020 Tables Notes 4 and 7
-          else:
-            fDistReductn = stepByEquatn4(fMDist,i012) #Use equations instead of MCS tables 
-          return fDistReductn
+        #def doStepFour(fMDist,i012):
+        # if bStep4ByTable == True:
+        #    fDistReductn = doStepOriginalFour(fMDist,i012) #As original MCS020 Tables Notes 4 and 7
+        #  else:
+        #    fDistReductn = stepByEquatn4(fMDist,i012) #Use equations instead of MCS tables 
+        #  return fDistReductn
           
         def doStepOriginalFour(fMDist,i012):
           #Note 4: DB DISTANCE REDUCTION (STEP4)
@@ -164,8 +164,13 @@
                 break
         
             sgUt  +=  "Doing Step 4 onwards<br>"
-            iDbreduction = doStepFour(fDm,iRefl) #All -ve numbers from Note 4 table (always negative integers in original table)
-            fStep6 = iDb+iDbreduction+iBa  #Steps 1+4+5 gives step 6
+            if bStep4ByTable == True:
+              fDbreduction = doStepOriginalFour(fMDist,iRefl) #As original MCS020 Tables Notes 4 and 7
+            else:
+              fDbreduction = stepByEquatn4(fMDist,iRefl) #Use equations instead of MCS tables 
+            #fDbreduction = doStepFour(fDm,iRefl) #All -ve numbers from Note 4 table (always negative integers in original table)
+        
+            fStep6 = iDb+fDbreduction+iBa  #Steps 1+4+5 gives step 6
             fBackgroundDb = 40 #dB Step 7
             fStep8 = fBackgroundDb - fStep6 #(STEP 7) - (STEP 6)
             #print("Stp6 {},Stp7 {},Stp8 {}".format(fStep6,fBackgroundDb,fStep8))
@@ -187,7 +192,6 @@
               sgUt  +=  "PASSED<br>"
         
             def sommary():
-              #global iDb,iRefl,fDm,iDbreduction,iBa,fStep6,fBackgroundDb,fStep8,fHighest,fAdjustmentFigure,fFinal
               #Input iRefl as 0, 1 or 2
               sBild = "S1 {}dB ".format(iDb)
               if iRefl == 0:
@@ -199,7 +203,7 @@
               else:
                 sBild += "err Stp2"
               sBild += "S3 {}m ".format(fDm)
-              sBild += "S4 {}dB ".format(iDbreduction)
+              sBild += "S4 {}dB ".format(fDbreduction)
               sBild += "S5 {}dB ".format(iBa)
               sBild += "S6 {}dB ".format(round(fStep6,4)) #(STEP 1) + (STEP 4) + (STEP 5)
               sBild += "S7 {}dB ".format(fBackgroundDb)    
