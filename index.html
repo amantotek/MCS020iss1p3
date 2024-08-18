@@ -7,7 +7,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
 </head>
 <body onload="brython()">
-    <h1>Sum Calculator 1154 </h1>
+    <h1>Sum Calculator 1203 </h1>
     <p>Enter the numbers:</p>
 
     <!-- First Number Input -->
@@ -82,7 +82,7 @@
                 document['result'].text = sgUt + f"Sum: {sum_result}"
             except ValueError:
                 # Handle invalid input
-                document['result'].text = sgUt + "Please enter valid numbers."
+                document['result'].text = "Please enter \n valid numbers."
 
         # Attach the calculate_sum function to the button click event
         document['calculate-button'].bind('click', calculate_sum)
