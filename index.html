@@ -11,7 +11,7 @@
 </head>
 <body onload="brython()">
     <h1>MCS020 Issue 1.3 Calculator</h1>
-    <p> Version: 2039 <br>Enter the data numbers:</p>
+    <p> Version: 2052 <br>Enter the data numbers:</p>
 
     <!-- First Number Input -->
     <div class="input-group">
@@ -40,7 +40,7 @@
 
     <!-- Boolean Input (Checkbox) -->
     <div class="input-group">
-        <label for="boolean">Select for official MCS Table usage:</label>
+        <label for="boolean">Select for official MCS Table usage (else uses equations):</label>
         <!-- Below the checkbox is checked (i.e., set to true) when the page first loads. -->
         <input type="checkbox" id="boolean" checked>
     </div>    
@@ -58,6 +58,7 @@
         import math
         from browser import document, alert
         bStep4ByTable = True #As original MCS020 Note 4 page 21/25
+        
         #NOTE 4: DB DISTANCE REDUCTION (14 column table)
         hrr = [[1,1.5,2,3,4,5,6,8,10,12,15,20,25,30],
         [-8,-11,-14,-17,-20,-21,-23,-26,-28,-29,-31,-34,-36,-37]]
@@ -73,13 +74,6 @@
               return xx
             if fDist < ivl:
               return xx-1
-        
-        #def doStepFour(fMDist,i012):
-        # if bStep4ByTable == True:
-        #    fDistReductn = doStepOriginalFour(fMDist,i012) #As original MCS020 Tables Notes 4 and 7
-        #  else:
-        #    fDistReductn = stepByEquatn4(fMDist,i012) #Use equations instead of MCS tables 
-        #  return fDistReductn
           
         def doStepOriginalFour(fMDist,i012):
           #Note 4: DB DISTANCE REDUCTION (STEP4)
@@ -167,8 +161,7 @@
             if bStep4ByTable == True:
               fDbreduction = doStepOriginalFour(fDm,iRefl) #As original MCS020 Tables Notes 4 and 7
             else:
-              fDbreduction = stepByEquatn4(fDm,iRefl) #Use equations instead of MCS tables 
-            #fDbreduction = doStepFour(fDm,iRefl) #All -ve numbers from Note 4 table (always negative integers in original table)
+              fDbreduction = stepByEquatn4(fDm,iRefl) #Use equations instead of MCS tables
         
             fStep6 = iDb+fDbreduction+iBa  #Steps 1+4+5 gives step 6
             fBackgroundDb = 40 #dB Step 7
@@ -185,7 +178,7 @@
             else:
               fAdjustmentFigure = stepByEquatn9(fAbsStp8)
             fFinal = fHighest + fAdjustmentFigure
-            sgUt  +=  "Final result (Fail is over 42) " + str(fFinal) + "<br>"
+            sgUt  +=  "Final result (fail is over 42dB) " + round(fFinal,4) + "dB   " #For presentation curtail digits after decimal place
             if fFinal > 42:
               sgUt  +=  "FAILED<br>"
             else:
