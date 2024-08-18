@@ -7,7 +7,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
 </head>
 <body onload="brython()">
-    <h1>Sum Calculator 1203 </h1>
+    <h1>Sum Calculator 1209 </h1>
     <p>Enter the numbers:</p>
 
     <!-- First Number Input -->
@@ -64,7 +64,7 @@
             sgUt = ""
             
             #Test
-            sgUt += "Test 1\n"
+            sgUt += "Test 1<br>"
             iRws = [0,3,6]
             for yy in iRws:
               #range(6) is values 0 to 5.
@@ -74,15 +74,16 @@
                   iTablVal -= 1 #anomaly
                 #print(iTablVal, end='');
                 sgUt += str(iTablVal) + " "
-              sgUt += "\n"
+              sgUt += "<br>"
 
             try:
                 # Convert to float and calculate the sum
                 sum_result = float(num1) + float(num2) + float(num3) + float(num4)
-                document['result'].text = sgUt + f"Sum: {sum_result}"
+                document['result'].html = sgUt + f"Sum: {sum_result}"
             except ValueError:
                 # Handle invalid input
-                document['result'].text = "Please enter \n valid numbers."
+                #document['result'].text = "Please enter \n valid numbers." 
+                document['result'].html = "Please enter<br>valid numbers."
 
         # Attach the calculate_sum function to the button click event
         document['calculate-button'].bind('click', calculate_sum)
