@@ -7,7 +7,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
 </head>
 <body onload="brython()">
-    <h1>Sum Calculator 1246 </h1>
+    <h1>Sum Calculator 1257 </h1>
     <p>Enter the numbers:</p>
 
     <!-- First Number Input -->
@@ -146,9 +146,30 @@
                   iBa = -iBa #as we entered +ve values
         
                 sgUt  +=  str(iDb) + " " + str(iRefl) + " " + str(fDm) + " " + str(iBa) + "<br>"
-                #Step 4
-                #iDbreduction = doStepFour(fDm,iRefl) #All -ve numbers from Note 4 table (always negative integers in original table)
                 break
+        
+            sgUt  +=  "Doing Step 4 onwards<br>"
+            iDbreduction = doStepFour(fDm,iRefl) #All -ve numbers from Note 4 table (always negative integers in original table)
+            fStep6 = iDb+iDbreduction+iBa  #Steps 1+4+5 gives step 6
+            fBackgroundDb = 40 #dB Step 7
+            fStep8 = fBackgroundDb - fStep6 #(STEP 7) - (STEP 6)
+            #print("Stp6 {},Stp7 {},Stp8 {}".format(fStep6,fBackgroundDb,fStep8))
+            fAbsStp8 = abs(fStep8)
+            #Find whichever is the higher dB from Step 6 and Step 7
+            if fStep6 > fBackgroundDb:
+              fHighest = fStep6
+            else:  
+              fHighest = fBackgroundDb
+            if bStep4ByTable == True:  
+              fAdjustmentFigure = ArrStp9[fAbsStp8] #fAbsStp8 was always an integer in original Step 4 table
+            else:
+              fAdjustmentFigure = stepByEquatn9(fAbsStp8)
+            fFinal = fHighest + fAdjustmentFigure
+            #sRpt = "{} dB Pass if <= 42.0".format(fFinal)
+            if fFinal > 42:
+              sgUt  +=  "FAIL<br>"
+            else:
+              sgUt  +=  "PASS<br>"
         
             try:
                 # Convert to float and calculate the sum
