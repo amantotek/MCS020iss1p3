@@ -180,9 +180,9 @@
             fFinal = fHighest + fAdjustmentFigure
             sgUt  +=  "Final result (fail is over 42dB) " + str(round(fFinal,4)) + "dB   " #For presentation curtail digits after decimal place
             if fFinal > 42:
-              sgUt  +=  "FAILED<br>"
+              sgUt  +=  "FAILED ❌ <br>"
             else:
-              sgUt  +=  "PASSED<br>"
+              sgUt  +=  "PASSED ✔️ <br>"
         
             def sommary():
               #Input iRefl as 0, 1 or 2
