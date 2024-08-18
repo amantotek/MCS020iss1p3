@@ -7,7 +7,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
 </head>
 <body onload="brython()">
-    <h1>Sum Calculator 1117 </h1>
+    <h1>Sum Calculator 1145 </h1>
     <p>Enter the numbers:</p>
 
     <!-- First Number Input -->
@@ -52,6 +52,30 @@
             num2 = document['num2'].value
             num3 = document['num3'].value
             num4 = document['num4'].value
+        
+            bStep4ByTable = True #As original MCS020 Note 4 page 21/25
+        
+            #NOTE 4: DB DISTANCE REDUCTION (14 column table)
+            hrr = [[1,1.5,2,3,4,5,6,8,10,12,15,20,25,30],
+            [-8,-11,-14,-17,-20,-21,-23,-26,-28,-29,-31,-34,-36,-37]]
+            
+            #NOTE 7: DECIBEL CORRECTION (STEP 9)
+            ArrStp9 = [3.0,2.5,2.1,1.8,1.5,1.2,1.0,0.8,0.6,0.5,0.4,0.3,0.3,0.2,0.2,0.1]
+            
+            #Test
+            document['result'].text = "Test 1"
+            iRws = [0,3,6]
+            for yy in iRws:
+              #range(6) is values 0 to 5.
+              for xx in range(14):
+                iTablVal = hrr[1][xx] + yy
+                if yy > 0 and xx == 5:
+                  iTablVal -= 1 #anomaly
+                #print(iTablVal, end='');
+                document['result'].text = f"Sum: {iTablVal}"
+              print()
+
+
         
             try:
                 # Convert to float and calculate the sum
