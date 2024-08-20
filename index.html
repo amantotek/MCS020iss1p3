@@ -11,7 +11,7 @@
 </head>
 <body onload="brython()">
     <h1>MCS020 Issue 1.3 Calculator</h1>
-    <p> Version: 1243 <br>Enter the data numbers:</p>
+    <p> Version: 1250 <br>Enter the data numbers:</p>
 
     <!-- First Number Input -->
     <div class="input-group">
@@ -222,7 +222,7 @@
         
                 def sommary():
                   #Input iRefl as 0, 1 or 2
-                  sBild = "S1 {}dB ".format(iDb)
+                  sBild = "S1 {:.3f}dB ".format(iDb)
                   if iRefl == 0:
                     sBild += "S2 Q2 " #1 reflection
                   elif iRefl == 1:
@@ -231,13 +231,13 @@
                     sBild += "S2 Q8 " #3 reflection 
                   else:
                     sBild += "err Stp2"
-                  sBild += "S3 {}m ".format(fDm)
-                  sBild += "S4 {}dB ".format(fDbreduction)
-                  sBild += "S5 {}dB ".format(iBa)
-                  sBild += "S6 {}dB ".format(round(fStep6,4)) #(STEP 1) + (STEP 4) + (STEP 5)
-                  sBild += "S7 {}dB ".format(fBackgroundDb)    
-                  sBild += "S8 {}dB ".format(round(fStep8,4)) #(STEP 7) - (STEP 6)  
-                  sBild += "S9 Highest {}dB, Adj {}dB, Final {}dB(A) ".format(fHighest,fAdjustmentFigure,fFinal)
+                  sBild += "S3 {:.3f}m ".format(fDm)
+                  sBild += "S4 {:.3f}dB ".format(fDbreduction)
+                  sBild += "S5 {:.3f}dB ".format(iBa)
+                  sBild += "S6 {:.3f}dB ".format(round(fStep6,4)) #(STEP 1) + (STEP 4) + (STEP 5)
+                  sBild += "S7 {:.3f}dB ".format(fBackgroundDb)    
+                  sBild += "S8 {:.3f}dB ".format(round(fStep8,4)) #(STEP 7) - (STEP 6)  
+                  sBild += "S9 Highest {:.3f}dB, Adj {:.3f}dB, Final {:.3f}dB(A) ".format(fHighest,fAdjustmentFigure,fFinal)
                   return sBild
                 sgUt += sommary()
                 break #Vital to break one time loop
