@@ -11,7 +11,7 @@
 </head>
 <body onload="brython()">
     <h1>MCS020 Issue 1.3 Calculator</h1>
-    <p> Version: 2137 <br>Enter the data numbers:</p>
+    <p> Version: 1237 <br>Enter the data numbers:</p>
 
     <!-- First Number Input -->
     <div class="input-group">
@@ -65,6 +65,24 @@
         
         #NOTE 7: DECIBEL CORRECTION (STEP 9)
         ArrStp9 = [3.0,2.5,2.1,1.8,1.5,1.2,1.0,0.8,0.6,0.5,0.4,0.3,0.3,0.2,0.2,0.1]
+
+        def is_integer(value):
+            try:
+                # Try to convert the value to an integer
+                int(value)
+                return True
+            except ValueError:
+                # If conversion fails, return False
+                return False
+        
+        def is_float(value):
+            try:
+                # Try to convert the value to a float
+                float(value)
+                return True
+            except ValueError:
+                # If conversion fails, return False
+                return False        
         
         def mToCol(fDist):  
           #Convert distance to column in table  
@@ -141,79 +159,89 @@
         
             while True:
                 sgUt  +=  "Checking Inputs<br>"
-                if num1.isdigit():
-                    iDb  =  int(num1) #Manufacturer max dBA
-                if num2.isdigit():
+        
+                #if num1.isdigit():
+                if is_integer(num1): #Manufacturer max dBA
+                    iDb  =  int(num1)
+                else:
+                    sgUt += "1st entry, Needs an integer"
+                    break
+                
+                if is_integer(num2): 
                     iRefl  =  int(num2)-1 #so now 0, 1 or 2
-                fDm  =  float(num3)
-                if num4.isdigit(): 
+                else:
+                    sgUt += "2nd entry, Needs an integer"
+                    break
+
+                if is_float(num3):
+                    fDm  =  float(num3)
+                else:
+                    sgUt += "3rd entry, Needs a non-Integer number with optional decimal point"
+                    break
+        
+                if is_integer(num4):
                   iBa  =  int(num4)
                   iBa = -iBa #as we entered +ve values
+                else:
+                    sgUt += "4th entry, Needs an integer"
+                    break
+        
                 bStep4ByTable = document['boolean'].checked
                 #sgUt  +=  str(iDb) + " " + str(iRefl) + " " + str(fDm) + " " + str(iBa) + "<br>"
                 break
         
-            sgUt  +=  "Doing Step 4 onwards<br>"
-            if bStep4ByTable == True:
-              fDbreduction = doStepOriginalFour(fDm,iRefl) #As original MCS020 Tables Notes 4 and 7
-            else:
-              fDbreduction = stepByEquatn4(fDm,iRefl) #Use equations instead of MCS tables
+                sgUt  +=  "Doing Step 4 onwards<br>"
+                if bStep4ByTable == True:
+                  fDbreduction = doStepOriginalFour(fDm,iRefl) #As original MCS020 Tables Notes 4 and 7
+                else:
+                  fDbreduction = stepByEquatn4(fDm,iRefl) #Use equations instead of MCS tables
+            
+                fStep6 = iDb+fDbreduction+iBa  #Steps 1+4+5 gives step 6
+                fBackgroundDb = 40 #dB Step 7
+                fStep8 = fBackgroundDb - fStep6 #(STEP 7) - (STEP 6)
+                #print("Stp6 {},Stp7 {},Stp8 {}".format(fStep6,fBackgroundDb,fStep8))
+                fAbsStp8 = abs(fStep8)
+                #Find whichever is the higher dB from Step 6 and Step 7
+                if fStep6 > fBackgroundDb:
+                  fHighest = fStep6
+                else:  
+                  fHighest = fBackgroundDb
+                if bStep4ByTable == True:  
+                  fAdjustmentFigure = ArrStp9[fAbsStp8] #fAbsStp8 was always an integer in original Step 4 table
+                else:
+                  fAdjustmentFigure = stepByEquatn9(fAbsStp8)
+                fFinal = fHighest + fAdjustmentFigure
+                if bStep4ByTable == True:
+                    sgUt  +=  "As original MCS020 Tables (See MCS Notes 4 and 7)<br>"
+                else:
+                    sgUt  +=  "WARNING: Equations replace both MCS020 Tables (See MCS Notes 4 and 7)<br>"
+                sgUt  +=  "Final result (fail is over 42dB) " + str(round(fFinal,4)) + "dB   " #For presentation curtail digits after decimal place
+                if fFinal > 42:
+                  sgUt  +=  "FAILED ❌ <br>"
+                else:
+                  sgUt  +=  "PASSED ✔️✔️ <br>"
         
-            fStep6 = iDb+fDbreduction+iBa  #Steps 1+4+5 gives step 6
-            fBackgroundDb = 40 #dB Step 7
-            fStep8 = fBackgroundDb - fStep6 #(STEP 7) - (STEP 6)
-            #print("Stp6 {},Stp7 {},Stp8 {}".format(fStep6,fBackgroundDb,fStep8))
-            fAbsStp8 = abs(fStep8)
-            #Find whichever is the higher dB from Step 6 and Step 7
-            if fStep6 > fBackgroundDb:
-              fHighest = fStep6
-            else:  
-              fHighest = fBackgroundDb
-            if bStep4ByTable == True:  
-              fAdjustmentFigure = ArrStp9[fAbsStp8] #fAbsStp8 was always an integer in original Step 4 table
-            else:
-              fAdjustmentFigure = stepByEquatn9(fAbsStp8)
-            fFinal = fHighest + fAdjustmentFigure
-            if bStep4ByTable == True:
-                sgUt  +=  "As original MCS020 Tables (See MCS Notes 4 and 7)<br>"
-            else:
-                sgUt  +=  "WARNING: Equations replace both MCS020 Tables (See MCS Notes 4 and 7)<br>"
-            sgUt  +=  "Final result (fail is over 42dB) " + str(round(fFinal,4)) + "dB   " #For presentation curtail digits after decimal place
-            if fFinal > 42:
-              sgUt  +=  "FAILED ❌ <br>"
-            else:
-              sgUt  +=  "PASSED ✔️✔️ <br>"
-        
-            def sommary():
-              #Input iRefl as 0, 1 or 2
-              sBild = "S1 {}dB ".format(iDb)
-              if iRefl == 0:
-                sBild += "S2 Q2 " #1 reflection
-              elif iRefl == 1:
-                sBild += "S2 Q4 " #2 reflection   
-              elif iRefl == 2:
-                sBild += "S2 Q8 " #3 reflection 
-              else:
-                sBild += "err Stp2"
-              sBild += "S3 {}m ".format(fDm)
-              sBild += "S4 {}dB ".format(fDbreduction)
-              sBild += "S5 {}dB ".format(iBa)
-              sBild += "S6 {}dB ".format(round(fStep6,4)) #(STEP 1) + (STEP 4) + (STEP 5)
-              sBild += "S7 {}dB ".format(fBackgroundDb)    
-              sBild += "S8 {}dB ".format(round(fStep8,4)) #(STEP 7) - (STEP 6)  
-              sBild += "S9 Highest {}dB, Adj {}dB, Final {}dB(A) ".format(fHighest,fAdjustmentFigure,fFinal)
-              return sBild
-            sgUt += sommary()
+                def sommary():
+                  #Input iRefl as 0, 1 or 2
+                  sBild = "S1 {}dB ".format(iDb)
+                  if iRefl == 0:
+                    sBild += "S2 Q2 " #1 reflection
+                  elif iRefl == 1:
+                    sBild += "S2 Q4 " #2 reflection   
+                  elif iRefl == 2:
+                    sBild += "S2 Q8 " #3 reflection 
+                  else:
+                    sBild += "err Stp2"
+                  sBild += "S3 {}m ".format(fDm)
+                  sBild += "S4 {}dB ".format(fDbreduction)
+                  sBild += "S5 {}dB ".format(iBa)
+                  sBild += "S6 {}dB ".format(round(fStep6,4)) #(STEP 1) + (STEP 4) + (STEP 5)
+                  sBild += "S7 {}dB ".format(fBackgroundDb)    
+                  sBild += "S8 {}dB ".format(round(fStep8,4)) #(STEP 7) - (STEP 6)  
+                  sBild += "S9 Highest {}dB, Adj {}dB, Final {}dB(A) ".format(fHighest,fAdjustmentFigure,fFinal)
+                  return sBild
+                sgUt += sommary()
 
-            '''
-            try:
-                # Convert to float and calculate the sum
-                sum_result = float(num1) 
-                document['result'].html = sgUt + f"Sum: {sum_result}"
-            except ValueError:
-                # Handle invalid input
-                document['result'].html = "Please enter<br>valid numbers."
-            '''
             document['result'].html = sgUt
             #End function calculate_sum
 
