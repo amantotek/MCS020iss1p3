@@ -11,7 +11,7 @@
 </head>
 <body onload="brython()">
     <h1>MCS020 Issue 1.3 Calculator</h1>
-    <p> Version: 1237 <br>Enter the data numbers:</p>
+    <p> Version: 1243 <br>Enter the data numbers:</p>
 
     <!-- First Number Input -->
     <div class="input-group">
@@ -188,7 +188,6 @@
         
                 bStep4ByTable = document['boolean'].checked
                 #sgUt  +=  str(iDb) + " " + str(iRefl) + " " + str(fDm) + " " + str(iBa) + "<br>"
-                break
         
                 sgUt  +=  "Doing Step 4 onwards<br>"
                 if bStep4ByTable == True:
@@ -241,7 +240,7 @@
                   sBild += "S9 Highest {}dB, Adj {}dB, Final {}dB(A) ".format(fHighest,fAdjustmentFigure,fFinal)
                   return sBild
                 sgUt += sommary()
-
+                break #Vital to break one time loop
             document['result'].html = sgUt
             #End function calculate_sum
 
